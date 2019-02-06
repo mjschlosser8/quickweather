@@ -44,17 +44,7 @@ five_day_url = "https://api.openweathermap.org/data/2.5/forecast?zip=" + "#{zip}
 five_day_encoded_url = URI.encode(five_day_url)
 five_day_response = HTTParty.get(five_day_encoded_url).to_s
 forecast = JSON.parse(five_day_response)
-#puts forecast["list"][0]
 
-# puts forecast["list"].length
-# loop do
-#   i = 0
-#   puts forecast["list"][i].to_s
-#   i + 1
-#   if i = forecast["list"].length
-#     break
-#   end
-# end
 i = 0
 until i == forecast["list"].length
   dt = forecast["list"][i]["dt"]
