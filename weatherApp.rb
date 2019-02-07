@@ -50,6 +50,7 @@ until i == forecast["list"].length
   dt = forecast["list"][i]["dt"]
   puts Time.at(dt)
   puts forecast["list"][i]["weather"][0]["main"].to_s
+  puts forecast["list"][i]["main"]["temp"].to_s + " Degrees F"
   puts "--------------------"
   i += 1
 end
