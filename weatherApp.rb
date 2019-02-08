@@ -2,6 +2,7 @@
 require 'httparty'
 require "addressable/uri"
 require 'date'
+require 'terminal-table'
 
 print 'Please enter your zip code (US only for now): '
 zip = gets.to_s.chomp
@@ -46,11 +47,14 @@ five_day_response = HTTParty.get(five_day_encoded_url).to_s
 forecast = JSON.parse(five_day_response)
 
 i = 0
+rows = []
 until i == forecast["list"].length
   dt = forecast["list"][i]["dt"]
-  puts Time.at(dt)
-  puts forecast["list"][i]["weather"][0]["main"].to_s
-  puts forecast["list"][i]["main"]["temp"].to_s + " Degrees F"
-  puts "--------------------"
+  time = Time.at(dt).strftime("%B %e, %Y %I:%M %p")
+  cond = forecast["list"][i]["weather"][0]["main"].to_s
+  deg = forecast["list"][i]["main"]["temp"].to_s
+  rows << [time, deg, cond]
+  table = Terminal::Table.new :headings => ['Date/Time', 'Temperture', 'Conditions'], :rows => rows
   i += 1
 end
+puts table
